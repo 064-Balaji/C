@@ -7,7 +7,7 @@ struct Node
     struct Node *next;
 };
 
-void pushh(struct Node** head_ref, int new_data)
+void push(struct Node** head_ref, int new_data)
 {
     /* 1. allocate node */
     struct Node* new_node
@@ -23,7 +23,7 @@ void pushh(struct Node** head_ref, int new_data)
     (*head_ref) = new_node;
 }
 
-int mai()
+int main()
 {
     struct Node* head = NULL;
     push(&head, 10);
