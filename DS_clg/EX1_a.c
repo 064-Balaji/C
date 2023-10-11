@@ -1,19 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
-int main()
-{
-    char str[100];
-    printf("Enter a string: ");
-    scanf("%s", str);
-
-    for(int i = 0; str[i] != '\0'; i++)
-    {
-        if(! isalpha(str[i])){
-            str[i] = '$';
+void replaceNonAlphabets(char *str) {
+    while (*str) {
+        if (!isalpha(*str)) {
+            *str = '$';
         }
+        str++;
     }
-    printf("The modeified string is: %s\n", str);
+}
+
+int main() {
+    char input[100];
+
+    printf("Enter a string: ");
+    fgets(input, sizeof(input), stdin);
+
+    // Remove the newline character added by fgets
+    input[strlen(input) - 1] = '\0';
+
+    printf("Original string: %s\n", input);
+
+    replaceNonAlphabets(input);
+
+    printf("Modified string: %s\n", input);
+
     return 0;
 }
