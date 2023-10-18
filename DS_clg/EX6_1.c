@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<ctype.h>
-#include<string.h> // Include string.h for strcat function
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
 #define SIZE 100
 
@@ -12,14 +12,14 @@ void push(char item) {
 }
 
 char pop() {
-   if(top == -1)
+   if (top == -1)
       return -1;
    else
       return stack[top--];
 }
 
 int precedence(char symbol) {
-   switch(symbol) {
+   switch (symbol) {
       case '+':
       case '-':
          return 2;
@@ -33,7 +33,7 @@ int precedence(char symbol) {
       case '#':
          return 1;
    }
-   return -1; // Add return statement to avoid control reaching end of non-void function
+   return -1;
 }
 
 void infixToPostfix(char infix_exp[], char postfix_exp[]) {
@@ -44,18 +44,21 @@ void infixToPostfix(char infix_exp[], char postfix_exp[]) {
    push('(');
    strcat(infix_exp, ")");
 
-   for(i = 0; infix_exp[i] != '\0'; i++) {
+   for (i = 0; infix_exp[i] != '\0'; i++) {
       item = infix_exp[i];
 
-      if(item == '(') {
+      if (item == '(') {
          push(item);
-      } else if(isalnum(item)) {
+      }
+      else if (isalnum(item)) {
          postfix_exp[j++] = item;
-      } else if(item == ')') {
-         while((x = pop()) != '(')
+      }
+      else if (item == ')') {
+         while ((x = pop()) != '(')
             postfix_exp[j++] = x;
-      } else {
-         while(precedence(stack[top]) >= precedence(item))
+      }
+      else {
+         while (precedence(stack[top]) >= precedence(item))
             postfix_exp[j++] = pop();
          push(item);
       }
@@ -67,12 +70,12 @@ void infixToPostfix(char infix_exp[], char postfix_exp[]) {
 int main() {
    char infix[SIZE], postfix[SIZE];
 
-   printf("\nEnter Infix expression : ");
-   fgets(infix, SIZE, stdin); // Use fgets instead of gets for safety
+   printf("Enter Infix expression: ");
+   fgets(infix, SIZE, stdin);
 
-   infix[strcspn(infix, "\n")] = 0; 
+   infix[strcspn(infix, "\n")] = 0;
 
-   infixToPostfix(infix,postfix);
+   infixToPostfix(infix, postfix);
 
    printf("Postfix Expression: ");
    puts(postfix);
