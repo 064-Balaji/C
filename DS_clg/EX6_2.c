@@ -1,89 +1,116 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 100
-
+// Structure for a stack
 struct Stack {
-    int arr[MAX_SIZE];
     int top;
+    unsigned capacity;
+    int* array;
 };
 
-void initialize(struct Stack* stack) {
+// Function to create a new stack
+struct Stack* createStack(unsigned capacity) {
+    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+    stack->capacity = capacity;
     stack->top = -1;
+    stack->array = (int*)malloc(stack->capacity * sizeof(int));
+    return stack;
 }
 
-int is_empty(struct Stack* stack) {
+// Function to check if a stack is empty
+int isEmpty(struct Stack* stack) {
     return (stack->top == -1);
 }
 
-int is_full(struct Stack* stack) {
-    return (stack->top == MAX_SIZE - 1);
+// Function to check if a stack is full
+int isFull(struct Stack* stack) {
+    return (stack->top == stack->capacity - 1);
 }
 
+// Function to push an element onto a stack
 void push(struct Stack* stack, int item) {
-    if (!is_full(stack)) {
-        stack->arr[++stack->top] = item;
+    if (isFull(stack)) {
+        printf("Stack is full. Cannot push.\n");
+        return;
     }
+    stack->array[++stack->top] = item;
 }
 
+// Function to pop an element from a stack
 int pop(struct Stack* stack) {
-    if (!is_empty(stack)) {
-        return stack->arr[stack->top--];
+    if (isEmpty(stack)) {
+        printf("Stack is empty. Cannot pop.\n");
+        return -1;
     }
-    return -1;
+    return stack->array[stack->top--];
 }
 
+// Structure for a queue
 struct Queue {
-    struct Stack stack1;
-    struct Stack stack2;
+    struct Stack* stack1; // For enqueue (push)
+    struct Stack* stack2; // For dequeue (pop)
 };
 
-void init_queue(struct Queue* queue) {
-    initialize(&queue->stack1);
-    initialize(&queue->stack2);
+// Function to create a new queue
+struct Queue* createQueue(unsigned capacity) {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->stack1 = createStack(capacity);
+    queue->stack2 = createStack(capacity);
+    return queue;
 }
 
+// Function to enqueue an element in the queue
 void enqueue(struct Queue* queue, int item) {
-    push(&queue->stack1, item);
+    push(queue->stack1, item);
 }
 
+// Function to dequeue an element from the queue
 int dequeue(struct Queue* queue) {
-    if (is_empty(&queue->stack2)) {
-        if (is_empty(&queue->stack1)) {
-            return -1;
-        }
-        while (!is_empty(&queue->stack1)) {
-            push(&queue->stack2, pop(&queue->stack1));
-        }
+    if (isEmpty(queue->stack1) && isEmpty(queue->stack2)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1;
     }
-    return pop(&queue->stack2);
-}
 
-void print_queue(struct Queue* queue) {
-    printf("Queue contents: ");
-    for (int i = 0; i <= queue->stack1.top; i++) {
-        printf("%d ", queue->stack1.arr[i]);
+    if (isEmpty(queue->stack2)) {
+        while (!isEmpty(queue->stack1)) {
+            push(queue->stack2, pop(queue->stack1));
+        }
     }
-    for (int i = 0; i <= queue->stack2.top; i++) {
-        printf("%d ", queue->stack2.arr[i]);
-    }
-    printf("\n");
+
+    return pop(queue->stack2);
 }
 
 int main() {
-    struct Queue queue;
-    init_queue(&queue);
+    struct Queue* queue = createQueue(100);
+    int choice, item;
 
-    enqueue(&queue, 1);
-    enqueue(&queue, 2);
-    enqueue(&queue, 3);
+    while (1) {
+        printf("Queue Operations:\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Quit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    print_queue(&queue);  // Before dequeue
-
-    int dequeued_item = dequeue(&queue);
-    printf("Dequeued item: %d\n", dequeued_item);
-
-    print_queue(&queue);  // After dequeue
+        switch (choice) {
+            case 1:
+                printf("Enter the item to enqueue: ");
+                scanf("%d", &item);
+                enqueue(queue, item);
+                break;
+            case 2:
+                item = dequeue(queue);
+                if (item != -1) {
+                    printf("Dequeued item: %d\n", item);
+                }
+                break;
+            case 3:
+                printf("Exiting program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
 
     return 0;
 }
