@@ -130,5 +130,58 @@ void ins(){
 }
 
 void del(){
-    printf("Deletion");
+    printf("Deletion \n");
+
+    printf("1.Deletion at first \n2.Deletion at middle \n3.Deletion at end \n");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf("Removing first element of an array...\n");
+        for (int i = 0; i<length; i++)
+        {
+            arr[i] = arr[i+1];
+        }
+        length--;
+        
+        printf("Modified Array is: ");
+        display();
+        break;
+    
+    case 2:
+        printf("Current Status: ");
+        display();
+        printf("Enter the element want to remove: ");
+        scanf("%d", &data);
+
+        for (int i=0; i<length; i++)
+        {
+            if(arr[i] == data){
+                for (int j=i; j<length; j++)
+                {
+                    arr[j]=arr[j+1];
+                }
+                
+            }
+        }
+        arr[length]=0;
+        length--;
+
+        printf("Modified Array is: ");
+        display();
+        break;
+        
+    case 3:
+        printf("Removing the last element of an arrray...\n");
+        arr[length-1] = 0;
+        length--;
+
+        printf("Modified Array is: ");
+        display();
+        break;
+
+    default:
+        break;
+    }
 }
