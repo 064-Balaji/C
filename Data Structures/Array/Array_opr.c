@@ -11,6 +11,7 @@ void creation();
 void display();
 void ins();
 void del();
+void search();
 
 int main(){
 
@@ -23,7 +24,7 @@ int main(){
     while (alive)
     {
         printf("What do you want to do: \n");
-        printf("1.Insertion 2.Deletion 3.Display 4.Exit: \n");
+        printf("1.Insertion 2.Deletion 3.Display 4.Search 5.Exit: \n");
         scanf("%d", &choice);
 
         switch (choice)
@@ -41,6 +42,10 @@ int main(){
             break;
 
         case 4:
+            search();
+            break;
+
+        case 5:
             return 0;
             break;
         
@@ -180,6 +185,34 @@ void del(){
         printf("Modified Array is: ");
         display();
         break;
+
+    default:
+        break;
+    }
+}
+
+void search(){
+    printf("How do you want to perform searching \n");
+    printf("1.Value of element 2.Position of an element\n");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf("Enter the value to search: ");
+        scanf("%d", &data);
+        for(int i=0; i<length; i++){
+            if(arr[i]==data){
+                printf("The position of an entered Value is: %d \n", i+1);
+            }
+        }
+        break;
+    
+    case 2:
+        printf("Enter the position to find: ");
+        scanf("%d", &data);
+
+        printf("The value of an given position is: %d", arr[data-1]);
 
     default:
         break;
