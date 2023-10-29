@@ -10,6 +10,7 @@ int length = 0, choice, data;
 void creation();
 void display();
 void ins();
+void del();
 
 int main(){
 
@@ -22,7 +23,7 @@ int main(){
     while (alive)
     {
         printf("What do you want to do: \n");
-        printf("1.Insertion 2.Deletion 3.Exit: \n");
+        printf("1.Insertion 2.Deletion 3.Display 4.Exit: \n");
         scanf("%d", &choice);
 
         switch (choice)
@@ -31,7 +32,15 @@ int main(){
             ins();
             break;
         
+        case 2:
+            del();
+            break;
+
         case 3:
+            display();
+            break;
+
+        case 4:
             return 0;
             break;
         
@@ -83,7 +92,7 @@ void ins(){
     case 1:
         for (int i=length; i>=0; i--)
         {
-            arr[i] = arr[i+1];
+            arr[i+1] = arr[i];
         }
         
         printf("Enter element to insert: ");
@@ -93,21 +102,17 @@ void ins(){
     
     case 2:
         display();
-        int sca, pos;
-        printf("Enter after which element you want to insert: ");
+        int sca;
+        printf("Enter position for where to insert: ");
         scanf("%d", &sca);
-        for (int i=0; i<length; i++)
+        for (int i=length; i>=sca-1; i--)
         {
-            if(sca == arr[i]){
-                for(int j=length; j<=0; j--){
-                    arr[j] = arr[j+1];
-                }
-                pos=i;
-            }
+            arr[i] = arr[i-1];
         }
         printf("Enter the value to insert: ");
-        scanf("%d\n",&data);
-        arr[pos] = data;
+        scanf("%d",&data);
+        arr[sca-1] = data;
+        break;
         
     case 3:
         printf("Enter element to insert: ");
@@ -118,7 +123,12 @@ void ins(){
     case 4:
         display();
         break;
+    
     default:
         break;
     }
+}
+
+void del(){
+    printf("Deletion");
 }
