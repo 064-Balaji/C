@@ -9,7 +9,7 @@ struct node
 
 void display();
 
-int no, data, length;
+int no, data, length, choice;
 
 void create(){
     printf("Enter the no of elements want to insert: ");
@@ -47,6 +47,35 @@ void display(){
         temp = temp->next;
     }
     printf("\n");
+}
+
+void insert(){
+    printf("1.Insert at First   2.Insert at Middle   3.Insert at End");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf("Enter the value to insert: ");
+        scanf("%d", &data);
+
+        struct node *current = (struct node *) malloc(sizeof(struct node));
+        current->data = data;
+        current->next = head;
+        head = current;
+        break;
+    
+    case 2:
+        display();
+        printf("Enter the position to be inserted");
+        scanf("%d", &no);
+
+        
+
+
+    default:
+        break;
+    }
 }
 
 int main(){
