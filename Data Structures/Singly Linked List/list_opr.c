@@ -63,6 +63,9 @@ void insert(){
         current->data = data;
         current->next = head;
         head = current;
+
+        printf("List after Insertion: \n");
+        display();
         break;
     
     case 2:
@@ -70,14 +73,111 @@ void insert(){
         printf("Enter the position to be inserted");
         scanf("%d", &no);
 
+        temp = head;
+        for(int i=0; i<no; i++)
+        {
+            temp=temp->next;
+        }
         
+        printf("Enter the value to be inserted: ");
+        scanf("%d", &data);
+        current->data = data;
+        current->next = temp->next;
+        temp->next = current;
 
+        printf("List after insertion: \n");
+        display();
+        break;
+
+    case 3:
+        printf("Enter the value to be Inserted: ");
+        scanf("%d", &data);
+
+        temp = head;
+        while(temp->next != NULL){
+            temp=temp->next;
+        }
+        temp->next = (struct node*) malloc(sizeof(struct node));
+        temp = temp->next;
+        temp->data = data;
+        temp->next = NULL;
 
     default:
+        printf("Enter the correct option");
+        break;
+    }
+}
+
+void delete(){
+    printf("1.Deletion at First   2.Deletion at Middle   3.Deletion at End\n");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        printf("Deleting the element: %d", head->data);
+        temp = head;
+        head = head->next;
+        free(temp);
+        break;
+
+    case 2:
+        display();
+        printf("Enter the position want to delete: ");
+        scanf("%d", &no);
+
+        temp = head;
+        for(int i=0; i<no; i++)
+        {
+            current = temp;
+            temp=temp->next;
+        }
+        current->next = temp->next;
+        free(temp);
+        break;
+
+    case 3:
+        printf("Before Deletion: \n");
+        display();
+        temp = head;
+        while(temp->next != NULL){
+            current = temp;
+            temp=temp->next;
+        }
+
+        current->next=NULL;
+        free(temp);
+        break;
+    
+    default:
+        printf("Choose correct option");
         break;
     }
 }
 
 int main(){
+    printf("\t \t Linked List Creation... \n");
     create();
+    printf("What do you want to do: \n");
+    printf("1.Insertion   2.Deletion   3.Display");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+    case 1:
+        insert();
+        break;
+    
+    case 2:
+        delete();
+        break;
+
+    case 3:
+        display();
+        break;
+
+    default:
+        printf("Choose the correct option");
+        break;
+    }
 }
