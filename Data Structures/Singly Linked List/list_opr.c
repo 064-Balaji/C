@@ -12,15 +12,16 @@ void create();
 void delete();
 void insert();
 
-int no, data, length, choice = 0;
+int no, data, length, choice = 1;
 
 
 int main(){
     printf("\t \t Linked List Creation... \n");
+    create();
+
     do {
         printf("What do you want to do: \n");
-        printf("1.Insertion   2.Deletion   3.Display \n");
-        printf("4. Exit \n");
+        printf("1.Insertion   2.Deletion   3.Display   4.Exit\n");
         scanf("%d", &choice);
 
         switch (choice) {
