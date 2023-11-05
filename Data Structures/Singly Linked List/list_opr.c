@@ -7,11 +7,48 @@ struct node
     struct node *next;
 }*head, *current, *temp;
 
-int display();
+void display();
+void create();
+void delete();
+void insert();
 
-int no, data, length, choice;
+int no, data, length, choice = 0;
 
-int create(){
+
+int main(){
+    printf("\t \t Linked List Creation... \n");
+    do {
+        printf("What do you want to do: \n");
+        printf("1.Insertion   2.Deletion   3.Display \n");
+        printf("4. Exit \n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            insert();
+            break;
+
+        case 2:
+            delete();
+            break;
+
+        case 3:
+            display();
+            break;
+
+        case 4:
+            exit(0);
+            break;
+
+        default:
+            printf("Choose the correct option");
+            break;
+        }
+    } while (choice != 4);
+
+}
+
+void create(){
     printf("Enter the no of elements want to insert: ");
     scanf("%d", &no);
     length = no;
@@ -37,10 +74,9 @@ int create(){
 
     printf("Current list status: \n");
     display();
-    return 0;
 }
 
-int display(){
+void display(){
     temp = head;
     while (temp->data != 0)
     {
@@ -48,11 +84,10 @@ int display(){
         temp = temp->next;
     }
     printf("\n");
-    return 0;
 }
 
 void insert(){
-    printf("1.Insert at First   2.Insert at Middle   3.Insert at End");
+    printf("1.Insert at First   2.Insert at Middle   3.Insert at End: ");
     scanf("%d", &choice);
 
     switch (choice)
@@ -153,33 +188,6 @@ void delete(){
     
     default:
         printf("Choose correct option");
-        break;
-    }
-}
-
-int main(){
-    printf("\t \t Linked List Creation... \n");
-    create();
-    printf("What do you want to do: \n");
-    printf("1.Insertion   2.Deletion   3.Display");
-    scanf("%d", &choice);
-
-    switch (choice)
-    {
-    case 1:
-        insert();
-        break;
-    
-    case 2:
-        delete();
-        break;
-
-    case 3:
-        display();
-        break;
-
-    default:
-        printf("Choose the correct option");
         break;
     }
 }
