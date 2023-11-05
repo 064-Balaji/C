@@ -10,6 +10,10 @@ struct node
 
 void create();
 void insert();
+/*
+    Newly inserted node of the tree can take place after the root node.
+    Based on the assumption i think while creation of the tree the nodes are won't aligned perfectly
+*/
 void ins_right();
 void ins_left();
 void display();
