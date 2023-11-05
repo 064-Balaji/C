@@ -7,11 +7,11 @@ struct node
     struct node *next;
 }*head, *current, *temp;
 
-void display();
+int display();
 
 int no, data, length, choice;
 
-void create(){
+int create(){
     printf("Enter the no of elements want to insert: ");
     scanf("%d", &no);
     length = no;
@@ -37,9 +37,10 @@ void create(){
 
     printf("Current list status: \n");
     display();
+    return 0;
 }
 
-void display(){
+int display(){
     temp = head;
     while (temp->data != 0)
     {
@@ -47,6 +48,7 @@ void display(){
         temp = temp->next;
     }
     printf("\n");
+    return 0;
 }
 
 void insert(){
@@ -81,9 +83,9 @@ void insert(){
         
         printf("Enter the value to be inserted: ");
         scanf("%d", &data);
+        temp->next = (struct node *) malloc(sizeof(struct node));
+        current = temp->next;
         current->data = data;
-        current->next = temp->next;
-        temp->next = current;
 
         printf("List after insertion: \n");
         display();
