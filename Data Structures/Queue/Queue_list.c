@@ -70,3 +70,4 @@ void delete(){
     front= front->next;
     free(temp);
 }
+
