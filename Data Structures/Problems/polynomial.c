@@ -1,85 +1,82 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct queue
-{
-    int data;
-    struct queue *next;
-};
-
-int createqueue(struct queue **front,struct queue **rear)
-{
-    printf("\n\n*******Creating a Circular Queue*******");
-    int num,n;
-    printf("\n\nEnter no. of elements in the queue: ");
-    scanf("%d",&n);
-    printf("\nEnter the data: ");
-    scanf("%d",&num);
-    *front=malloc(sizeof(struct queue));
-    (*front)->data=num;
-    (*front)->next=NULL;
-    *rear=*front;
-    for(int i=1;i<n-1;i++)
-    {
-        printf("Enter the data: ");
-        scanf("%d",&num);
-        (*rear)->next=malloc(sizeof(struct queue));
-        *rear=(*rear)->next;
-        (*rear)->data=num;
+// Function to print a polynomial
+void printPolynomial(int poly[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (poly[i] != 0) {
+            printf("%dx^%d", poly[i], i);
+            if (i < n - 1 && poly[i + 1] != 0) {
+                printf(" + ");
+            }
+        }
     }
-    printf("Enter the data: ");
-    scanf("%d",&num);
-    (*rear)->next=malloc(sizeof(struct queue));
-    *rear=(*rear)->next;
-    (*rear)->data=num;
-    (*rear)->next=*front;
-    return num;
+    printf("\n");
 }
 
-int enqueue(struct queue **front,struct queue **rear,int num,int data)
-{
-    struct queue *new;
-    new=malloc(sizeof(struct queue));
-    new->data=data;
-    (*rear)->next=new;
-    new->next=*front;
-    *rear=new;
-    return ++num;
-}
+// Function to add two polynomials
+void addPolynomials(int poly1[], int n1, int poly2[], int n2) {
+    int maxSize = (n1 > n2) ? n1 : n2;
+    int result[maxSize];
 
-int dequeue(struct queue **front,struct queue **rear,int num)
-{
-    struct queue *temp;
-    temp=*front;
-    *front=(*front)->next;
-    free(temp);
-    (*rear)->next=*front;
-    printf("\n\nSuccessfully dequeued....");
-    return --num;
-}
-
-void displayqueue(struct queue *front,int num)
-{
-    printf("\n\n*******Displaying the Queue*******");
-    for(int i=0;i<num;i++)
-    {
-        printf("\n%d",front->data);
-        front=front->next;
+    for (int i = 0; i < maxSize; i++) {
+        int term1 = (i < n1) ? poly1[i] : 0;
+        int term2 = (i < n2) ? poly2[i] : 0;
+        result[i] = term1 + term2;
     }
+
+    printf("Sum: ");
+    printPolynomial(result, maxSize);
 }
 
-int main()
-{
-    struct queue *front=NULL;
-    struct queue *rear=NULL;
-    int num;
+// Function to multiply two polynomials
+void multiplyPolynomials(int poly1[], int n1, int poly2[], int n2) {
+    int maxSize = n1 + n2 - 1;
+    int result[maxSize];
+
+    for (int i = 0; i < maxSize; i++) {
+        result[i] = 0;
+    }
+
+    for (int i = 0; i < n1; i++) {
+        for (int j = 0; j < n2; j++) {
+            result[i + j] += poly1[i] * poly2[j];
+        }
+    }
+
+    printf("Product: ");
+    printPolynomial(result, maxSize);
+}
+
+int main() {
+    int n1, n2;
+
+    printf("Enter the degree of Polynomial 1: ");
+    scanf("%d", &n1);
     
-    num=createqueue(&front,&rear);
-    displayqueue(front,num);
+    int poly1[n1 + 1];
+    printf("Enter the coefficients of Polynomial 1 from highest degree to constant term:\n");
+    for (int i = n1; i >= 0; i--) {
+        scanf("%d", &poly1[i]);
+    }
+
+    printf("Enter the degree of Polynomial 2: ");
+    scanf("%d", &n2);
     
-    num=enqueue(&front,&rear,num,5);
-    displayqueue(front,num);
-    
-    num=dequeue(&front,&rear,num);
-    displayqueue(front,num);
+    int poly2[n2 + 1];
+    printf("Enter the coefficients of Polynomial 2 from highest degree to constant term:\n");
+    for (int i = n2; i >= 0; i--) {
+        scanf("%d", &poly2[i]);
+    }
+
+    printf("Polynomial 1: ");
+    printPolynomial(poly1, n1 + 1);
+
+    printf("Polynomial 2: ");
+    printPolynomial(poly2, n2 + 1);
+
+    addPolynomials(poly1, n1 + 1, poly2, n2 + 1);
+    multiplyPolynomials(poly1, n1 + 1, poly2, n2 + 1);
+
+    return 0;
 }
